@@ -17,7 +17,7 @@ export class Gallery extends Component<{},GalleryState> {
                 <p class="card-header-title">{photo.title}</p>
             </header>
             <div class="card-image" onClick={() => this.setState({ selectedPhoto: photo })}>
-                <img src={`gallery/photos/${photo.path}`} alt={photo.title}/>
+                <img src={photo.image} alt={photo.title}/>
             </div>
             <div class="card-content">
                 <div class="content">Date: {photo.date}</div>
