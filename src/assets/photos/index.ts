@@ -16,6 +16,7 @@ import FallCreek from './2022_02_19-fall-creek.jpg';
 import MountainLandscape from './2022_06_18-mountain-landscape.jpg';
 import PicturedRocks from './2022_11_21-pictured-rocks.jpg';
 import SunsetClouds from './2023_09_17-sunset-clouds.jpg';
+import PathThroughForest from './2023_11_22-forest.jpg';
 
 export {
     Zeus,
@@ -35,5 +36,6 @@ export {
     FallCreek,
     MountainLandscape,
     PicturedRocks,
-    SunsetClouds
+    SunsetClouds,
+    PathThroughForest
 }

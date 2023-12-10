@@ -16,7 +16,7 @@ import {
     FallCreek,
     MountainLandscape,
     PicturedRocks,
-    SunsetClouds
+    SunsetClouds, PathThroughForest
 } from "../assets/photos";
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic'] as const
@@ -165,6 +165,13 @@ const photoData: PhotoDataType[] = [
         subject: 'landscape',
         title: 'Evening Clouds',
         description: 'Inspired by some incredible clouds that I saw at an outdoor concert.'
+    },
+    {
+        image: PathThroughForest,
+        date: '11/22/2023',
+        medium: ['colored-pencil'],
+        subject: 'landscape',
+        title: 'A Path through the Woods'
     }
 ]
 
