@@ -6,7 +6,8 @@
   "homepage": "https://zach-hensler.github.io/gallery",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "test": "vitest --run",
+    "build": "tsc && npm run test && vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.6.0",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "vitest": "^1.0.4"
   }
 }

@@ -4,12 +4,29 @@ import photoData, {Mediums, MediumsType, PhotoDataType, Subjects, SubjectsType} 
 import FilterIcon from '../assets/icons/FilterIcon.svg';
 import CloseIcon from '../assets/icons/CloseIcon.svg';
 
+/**
+ * Curried function for sorting photos by date
+ * @param sortDirection - Direction to sort the photos, either newest or oldest
+ */
+export const comparePhotoByDate = (sortDirection: GalleryState['sortDirection']) => (a: PhotoDataType, b: PhotoDataType): number => sortDirection === 'newest'
+    ? new Date(b.date).valueOf() - new Date(a.date).valueOf()
+    : new Date(a.date).valueOf() - new Date(b.date).valueOf()
+
+/**
+ * Curried function for filtering photos, filters are "or'ed" together within a category
+ * @param mediumFilters - Filters to apply based on the photo's medium
+ * @param subjectFilters - Filters to apply based on the photo's subject
+ */
+export const checkPhotoForFilters = (mediumFilters: GalleryState['mediumFilters'], subjectFilters: GalleryState['subjectFilters']) => (photo: PhotoDataType): boolean =>
+    !!((!subjectFilters.length || subjectFilters.includes(photo.subject)) &&
+    (!mediumFilters.length || mediumFilters.find(medium => photo.medium.includes(medium))))
+
 interface GalleryState {
     showSortFilterModal: boolean
     selectedPhoto: PhotoDataType|null
     sortDirection: 'newest'|'oldest',
-    filteredMediums: MediumsType[]
-    filteredSubjects: SubjectsType[]
+    mediumFilters: MediumsType[]
+    subjectFilters: SubjectsType[]
 }
 
 export class Gallery extends Component<{},GalleryState> {
@@ -17,32 +34,25 @@ export class Gallery extends Component<{},GalleryState> {
         showSortFilterModal: false,
         selectedPhoto: null,
         sortDirection: 'newest',
-        filteredMediums: [],
-        filteredSubjects: []
+        mediumFilters: [],
+        subjectFilters: []
     }
 
     onClickSubject = (clickedSubject: SubjectsType) => this.setState({
-        filteredSubjects: this.state.filteredSubjects.includes(clickedSubject)
-            ? this.state.filteredSubjects.filter(s => s !== clickedSubject)
-            : [ ...this.state.filteredSubjects, clickedSubject ]
+        subjectFilters: this.state.subjectFilters.includes(clickedSubject)
+            ? this.state.subjectFilters.filter(s => s !== clickedSubject)
+            : [ ...this.state.subjectFilters, clickedSubject ]
     })
 
     onClickMedium = (clickedMedium: MediumsType) => this.setState({
-        filteredMediums: this.state.filteredMediums.includes(clickedMedium)
-            ? this.state.filteredMediums.filter(s => s !== clickedMedium)
-            : [ ...this.state.filteredMediums, clickedMedium ]
+        mediumFilters: this.state.mediumFilters.includes(clickedMedium)
+            ? this.state.mediumFilters.filter(s => s !== clickedMedium)
+            : [ ...this.state.mediumFilters, clickedMedium ]
     })
 
-    sortPhotos = (unsortedPhotos: PhotoDataType[]): PhotoDataType[] => [...unsortedPhotos].sort((a, b) => this.state.sortDirection === 'newest'
-        ? new Date(b.date).valueOf() - new Date(a.date).valueOf()
-        : new Date(a.date).valueOf() - new Date(b.date).valueOf())
-
-    filterPhotos = (unfilteredPhotos: PhotoDataType[]): PhotoDataType[] =>
-        unfilteredPhotos.filter(photo =>
-            (!this.state.filteredSubjects.length || this.state.filteredSubjects.includes(photo.subject)) &&
-            (!this.state.filteredMediums.length || this.state.filteredMediums.find(medium => photo.medium.includes(medium))))
-
-    renderPhotoData = () => this.sortPhotos(this.filterPhotos(photoData))
+    renderPhotoData = () => photoData
+        .filter(checkPhotoForFilters(this.state.mediumFilters, this.state.subjectFilters))
+        .sort(comparePhotoByDate(this.state.sortDirection))
         .map(photo =>
             <div className="card column is-one-third my-4">
                 <header className="card-header">
@@ -52,8 +62,11 @@ export class Gallery extends Component<{},GalleryState> {
                     <img src={photo.image} alt={photo.title}/>
                 </div>
                 <div className="card-content">
-                    <div className="content">Date: {photo.date}</div>
-                    <div className="content">Medium: {photo.medium}</div>
+                    {photo.description ? <p className="content">{photo?.description}</p> : <></>}
+                    <p className="content">Date: {photo.date}</p>
+                    <p className="content">
+                        Medium: {photo.medium.reduce<string>((prev, curr, idx) => idx > 0 ? `${prev}, ${curr}` : curr, '')}
+                    </p>
                 </div>
             </div>)
 
@@ -63,7 +76,7 @@ export class Gallery extends Component<{},GalleryState> {
             <div className="modal-content">
                 <div className={`card`}>
                     <header className="card-header">
-                        <p className="card-header-title">{this.state.selectedPhoto.title}</p>
+                        <p className="card-header-title">{this.state.selectedPhoto.title} - {this.state.selectedPhoto.date}</p>
                         <button className="card-header-icon">
                             <span className="icon">
                                 <img
@@ -75,10 +88,6 @@ export class Gallery extends Component<{},GalleryState> {
                     </header>
                     <div className="card-image">
                         <img src={this.state.selectedPhoto.image} alt={this.state.selectedPhoto.title}/>
-                    </div>
-                    <div className="card-content">
-                        <div className="content">Date: {this.state.selectedPhoto.date}</div>
-                        <div className="content">Medium: {this.state.selectedPhoto.medium}</div>
                     </div>
                 </div>
             </div>
