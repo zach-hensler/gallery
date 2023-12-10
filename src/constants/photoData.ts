@@ -7,10 +7,19 @@ import {
     Leaves,
     RyansRock,
     LizardTime,
-    ColorfulKoroks, Chipmunk, SleepyMen, SurprisedPikachu
+    ColorfulKoroks,
+    Chipmunk,
+    SleepyMen,
+    SurprisedPikachu,
+    SunsetLandscape,
+    WinterLandscape,
+    FallCreek,
+    MountainLandscape,
+    PicturedRocks,
+    SunsetClouds
 } from "../assets/photos";
 
-export const Mediums = ['graphite', 'colored-pencil', 'marker'] as const
+export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic'] as const
 export type MediumsType = typeof Mediums[number]
 
 export const Subjects = ['landscape', 'still-life', 'animal', 'scene'] as const
@@ -22,6 +31,7 @@ export interface PhotoDataType {
     date: string
     medium: MediumsType[]
     subject: SubjectsType
+    description?: string
 }
 const photoData: PhotoDataType[] = [
     {
@@ -71,7 +81,8 @@ const photoData: PhotoDataType[] = [
         date: '08/20/2022',
         medium: ['graphite'],
         subject: 'scene',
-        title: 'Ryan\'s Rock'
+        title: 'Ryan\'s Rock',
+        description: 'Ryan and Mom, scaling rocks while hiking in Colorado'
     },
     {
         image: LizardTime,
@@ -107,6 +118,53 @@ const photoData: PhotoDataType[] = [
         medium: ['marker'],
         subject: 'animal',
         title: 'Surprised Pikachu'
+    },
+    {
+        image: SunsetLandscape,
+        date: '11/19/2021',
+        medium: ['acrylic'],
+        subject: 'landscape',
+        title: 'Sunset over Hills',
+        description: 'Inspired by a Bob Ross Tutorial'
+    },
+    {
+        image: WinterLandscape,
+        date: '01/15/2022',
+        medium: ['acrylic'],
+        subject: 'landscape',
+        title: 'Winter Creek',
+        description: 'Inspired by a Bob Ross Tutorial'
+    },
+    {
+        image: FallCreek,
+        date: '02/19/2022',
+        medium: ['acrylic'],
+        subject: 'landscape',
+        title: 'Covered Bridge over a Creek in Fall',
+        description: 'Inspired by a Bob Ross Tutorial'
+    },
+    {
+        image: MountainLandscape,
+        date: '06/18/2022',
+        medium: ['acrylic'],
+        subject: 'landscape',
+        title: 'A Mountain between Pines',
+        description: 'Inspired by a Bob Ross Tutorial'
+    },
+    {
+        image: PicturedRocks,
+        date: '11/21/2022',
+        medium: ['acrylic'],
+        subject: 'landscape',
+        title: 'A Lakeside view of Pictured Rocks'
+    },
+    {
+        image: SunsetClouds,
+        date: '09/17/2023',
+        medium: ['acrylic'],
+        subject: 'landscape',
+        title: 'Evening Clouds',
+        description: 'Inspired by some incredible clouds that I saw at an outdoor concert.'
     }
 ]
 
