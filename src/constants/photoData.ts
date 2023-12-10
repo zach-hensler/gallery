@@ -125,7 +125,7 @@ const photoData: PhotoDataType[] = [
         medium: ['acrylic'],
         subject: 'landscape',
         title: 'Sunset over Hills',
-        description: 'Inspired by a Bob Ross Tutorial'
+        description: 'Inspired by Bob Ross'
     },
     {
         image: WinterLandscape,
@@ -133,7 +133,7 @@ const photoData: PhotoDataType[] = [
         medium: ['acrylic'],
         subject: 'landscape',
         title: 'Winter Creek',
-        description: 'Inspired by a Bob Ross Tutorial'
+        description: 'Inspired by Bob Ross'
     },
     {
         image: FallCreek,
@@ -141,7 +141,7 @@ const photoData: PhotoDataType[] = [
         medium: ['acrylic'],
         subject: 'landscape',
         title: 'Covered Bridge over a Creek in Fall',
-        description: 'Inspired by a Bob Ross Tutorial'
+        description: 'Inspired by Bob Ross'
     },
     {
         image: MountainLandscape,
@@ -149,7 +149,7 @@ const photoData: PhotoDataType[] = [
         medium: ['acrylic'],
         subject: 'landscape',
         title: 'A Mountain between Pines',
-        description: 'Inspired by a Bob Ross Tutorial'
+        description: 'Inspired by Bob Ross'
     },
     {
         image: PicturedRocks,
