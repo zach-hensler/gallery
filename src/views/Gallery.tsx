@@ -141,7 +141,7 @@ export class Gallery extends Component<{},GalleryState> {
                                     {Subjects.map(subject =>
                                         <>
                                             <label class="checkbox">
-                                                <input type="checkbox" onClick={() => this.onClickSubject(subject)} />
+                                                <input type="checkbox" checked={this.state.subjectFilters.includes(subject)}  onClick={() => this.onClickSubject(subject)} />
                                                 &nbsp;{subject}
                                             </label>
                                             <br />
@@ -155,7 +155,7 @@ export class Gallery extends Component<{},GalleryState> {
                                 {Mediums.map(medium =>
                                     <>
                                         <label className="checkbox">
-                                            <input type="checkbox" onClick={() => this.onClickMedium(medium)}/>
+                                            <input type="checkbox" checked={this.state.mediumFilters.includes(medium)}  onClick={() => this.onClickMedium(medium)}/>
                                             &nbsp;{medium}
                                         </label>
                                         <br />
