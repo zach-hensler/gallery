@@ -1,18 +1,27 @@
-import Zeus from '../assets/2023_11_22-Zeus.jpg';
-import Shrine from '../assets/2023_08_09-Shrine.jpg';
-import WineGlass from '../assets/2023_08_17-wineglass.jpg';
-import Speckles from '../assets/2023_10_10-Speckles.jpg';
-import Bokoblin from '../assets/2023_10_16-bokoblin.jpg';
+import {
+    Zeus,
+    Bokoblin,
+    Speckles,
+    Shrine,
+    WineGlass,
+    Leaves,
+    RyansRock,
+    LizardTime,
+    ColorfulKoroks, Chipmunk, SleepyMen, SurprisedPikachu
+} from "../assets/photos";
 
-type Medium = 'graphite'|'colored-pencil'|'acrylic'|'marker'|'watercolor'
-type Subject = 'landscape'|'still-life'|'animal'
+export const Mediums = ['graphite', 'colored-pencil', 'marker'] as const
+export type MediumsType = typeof Mediums[number]
+
+export const Subjects = ['landscape', 'still-life', 'animal', 'scene'] as const
+export type SubjectsType = typeof Subjects[number]
 
 export interface PhotoDataType {
     image: string
     title: string
     date: string
-    medium: Medium[]
-    subject: Subject
+    medium: MediumsType[]
+    subject: SubjectsType
 }
 const photoData: PhotoDataType[] = [
     {
@@ -49,6 +58,55 @@ const photoData: PhotoDataType[] = [
         medium: ['colored-pencil'],
         subject: 'animal',
         title: 'Speckles'
+    },
+    {
+        image: Leaves,
+        date: '08/07/2022',
+        medium: ['graphite'],
+        subject: 'still-life',
+        title: 'Leaves in the Park'
+    },
+    {
+        image: RyansRock,
+        date: '08/20/2022',
+        medium: ['graphite'],
+        subject: 'scene',
+        title: 'Ryan\'s Rock'
+    },
+    {
+        image: LizardTime,
+        date: '05/23/23',
+        medium: ['colored-pencil'],
+        subject: 'scene',
+        title: 'It\'s Lizard Time'
+    },
+    {
+        image: ColorfulKoroks,
+        date: '07/01/2023',
+        medium: ['colored-pencil'],
+        subject: 'animal',
+        title: 'Colorful Koroks'
+    },
+    {
+        image: Chipmunk,
+        date: '07/09/2023',
+        medium: ['graphite'],
+        subject: 'animal',
+        title: 'Chipmunk'
+    },
+    {
+        image: SleepyMen,
+        date: '07/19/2023',
+        medium: ['colored-pencil'],
+        subject: 'scene',
+        title: 'Sleepy Men around the Fire'
+    },
+    {
+        image: SurprisedPikachu,
+        date: '11/23/2023',
+        medium: ['marker'],
+        subject: 'animal',
+        title: 'Surprised Pikachu'
     }
 ]
 
