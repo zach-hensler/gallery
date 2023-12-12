@@ -1,8 +1,10 @@
-import {Component} from "preact";
+import {FunctionalComponent} from "preact";
+import {useCallback, useMemo, useState} from "preact/hooks";
 
 import photoData, {Mediums, MediumsType, PhotoDataType, Subjects, SubjectsType} from "../constants/photoData.ts";
 import FilterIcon from '../assets/icons/FilterIcon.svg';
 import CloseIcon from '../assets/icons/CloseIcon.svg';
+import {useSwipeGestures} from "../hooks/useSwipeGestures.ts";
 
 /**
  * Curried function for sorting photos by date
@@ -21,6 +23,40 @@ export const checkPhotoForFilters = (mediumFilters: GalleryState['mediumFilters'
     !!((!subjectFilters.length || subjectFilters.includes(photo.subject)) &&
     (!mediumFilters.length || mediumFilters.find(medium => photo.medium.includes(medium))))
 
+/**
+ * When a subject is clicked, it will toggle its status as a filter
+ * Ex: If it's applied, it'll turn off.  If it's off, it'll apply
+ * @param clickedSubject - The clickedSubject type that was clicked on
+ * @param subjectFilters - The currently applied subject filters
+ * @param updateState - A callback function to handle the change
+ */
+const onClickSubject = (
+    clickedSubject: SubjectsType,
+    subjectFilters: GalleryState['subjectFilters'],
+    updateState: (newState: Partial<GalleryState>) => void
+) => updateState({
+    subjectFilters: subjectFilters.includes(clickedSubject)
+        ? subjectFilters.filter(s => s !== clickedSubject)
+        : [ ...subjectFilters, clickedSubject ]
+})
+
+/**
+ * When a medium is clicked, it will toggle its status as a filter
+ * Ex: If it's applied, it'll turn off.  If it's off, it'll apply
+ * @param clickedMedium - The medium type that was clicked on
+ * @param mediumFilters - The currently applied medium filters
+ * @param updateState - A callback function to handle the change
+ */
+const onClickMedium = (
+    clickedMedium: MediumsType,
+    mediumFilters: GalleryState['mediumFilters'],
+    updateState: (newState: Partial<GalleryState>) => void
+) => updateState({
+    mediumFilters: mediumFilters.includes(clickedMedium)
+        ? mediumFilters.filter(s => s !== clickedMedium)
+        : [ ...mediumFilters, clickedMedium ]
+})
+
 interface GalleryState {
     showSortFilterModal: boolean
     selectedPhoto: PhotoDataType|null
@@ -29,36 +65,50 @@ interface GalleryState {
     subjectFilters: SubjectsType[]
 }
 
-export class Gallery extends Component<{},GalleryState> {
-    state: GalleryState = {
+export const Gallery: FunctionalComponent = () =>  {
+    const [state, setState] = useState<GalleryState>({
         showSortFilterModal: false,
         selectedPhoto: null,
         sortDirection: 'newest',
         mediumFilters: [],
         subjectFilters: []
-    }
+    });
 
-    onClickSubject = (clickedSubject: SubjectsType) => this.setState({
-        subjectFilters: this.state.subjectFilters.includes(clickedSubject)
-            ? this.state.subjectFilters.filter(s => s !== clickedSubject)
-            : [ ...this.state.subjectFilters, clickedSubject ]
-    })
+    const filteredAndSortedPhotos = useMemo(() =>
+        photoData
+            .filter(checkPhotoForFilters(state.mediumFilters, state.subjectFilters))
+            .sort(comparePhotoByDate(state.sortDirection)),
+        [state.mediumFilters, state.subjectFilters, state.sortDirection])
 
-    onClickMedium = (clickedMedium: MediumsType) => this.setState({
-        mediumFilters: this.state.mediumFilters.includes(clickedMedium)
-            ? this.state.mediumFilters.filter(s => s !== clickedMedium)
-            : [ ...this.state.mediumFilters, clickedMedium ]
-    })
+    const updateState = useCallback((newState: Partial<GalleryState>) =>
+        setState(prevState=> ({ ...prevState, ...newState })), []);
 
-    renderPhotoData = () => photoData
-        .filter(checkPhotoForFilters(this.state.mediumFilters, this.state.subjectFilters))
-        .sort(comparePhotoByDate(this.state.sortDirection))
+    const closeSelectedPhoto = () => updateState({ selectedPhoto: null });
+
+    const getIndexByPhoto = (searchPhoto: PhotoDataType) => filteredAndSortedPhotos.findIndex((p) => p.title === searchPhoto.title);
+
+    const nextPhoto = useMemo(() => state.selectedPhoto
+        ? filteredAndSortedPhotos[getIndexByPhoto(state.selectedPhoto) + 1]
+        : null, [state.selectedPhoto]);
+
+    const previousPhoto =  useMemo(() => state.selectedPhoto
+        ? filteredAndSortedPhotos[getIndexByPhoto(state.selectedPhoto) - 1]
+        : null, [state.selectedPhoto]);
+
+    useSwipeGestures({
+        handleDownSwipe: closeSelectedPhoto,
+        handleUpSwipe: closeSelectedPhoto,
+        handleLeftSwipe: () => updateState({ selectedPhoto: nextPhoto }),
+        handleRightSwipe: () => updateState({ selectedPhoto: previousPhoto })
+    });
+
+    const renderPhotoData = (photos: PhotoDataType[]) => photos
         .map(photo =>
             <div className="card column is-one-third my-4">
                 <header className="card-header">
                     <p className="card-header-title">{photo.title}</p>
                 </header>
-                <div className="card-image" onClick={() => this.setState({selectedPhoto: photo})}>
+                <div className="card-image" onClick={() => updateState({selectedPhoto: photo})}>
                     <img src={photo.image} alt={photo.title}/>
                 </div>
                 <div className="card-content">
@@ -70,33 +120,33 @@ export class Gallery extends Component<{},GalleryState> {
                 </div>
             </div>)
 
-    renderSelectedPhotoModal = () => this.state.selectedPhoto
-        ? <div class={`modal ${this.state.selectedPhoto ? 'is-active' : ''}`}>
-            <div class="modal-background" onClick={() => this.setState({selectedPhoto: null})}></div>
+    const renderSelectedPhotoModal = () => state.selectedPhoto
+        ? <div class={`modal ${state.selectedPhoto ? 'is-active' : ''}`}>
+            <div class="modal-background" onClick={closeSelectedPhoto}></div>
             <div className="modal-content">
                 <div className={`card`}>
                     <header className="card-header">
-                        <p className="card-header-title">{this.state.selectedPhoto.title} - {this.state.selectedPhoto.date}</p>
+                        <p className="card-header-title">{state.selectedPhoto.title} - {state.selectedPhoto.date}</p>
                         <button className="card-header-icon">
                             <span className="icon">
                                 <img
                                     src={CloseIcon}
                                     alt="Close Icon"
-                                    onClick={() => this.setState({selectedPhoto: null})}/>
+                                    onClick={closeSelectedPhoto}/>
                             </span>
                         </button>
                     </header>
                     <div className="card-image">
-                        <img src={this.state.selectedPhoto.image} alt={this.state.selectedPhoto.title}/>
+                        <img src={state.selectedPhoto.image} alt={state.selectedPhoto.title}/>
                     </div>
                 </div>
             </div>
         </div>
         : <></>;
 
-    renderSortFilterModal = () =>
-        <div class={`modal ${(this.state.showSortFilterModal && !this.state.selectedPhoto) ? 'is-active' : ''}`}>
-            <div class="modal-background" onClick={() => this.setState({showSortFilterModal: false})}></div>
+    const renderSortFilterModal = () =>
+        <div class={`modal ${(state.showSortFilterModal && !state.selectedPhoto) ? 'is-active' : ''}`}>
+            <div class="modal-background" onClick={() => updateState({showSortFilterModal: false})}></div>
             <div class="modal-content">
                 <div class="card">
                     <div class="card-header is-flex is-justify-content-space-around is-align-items-center">
@@ -106,7 +156,7 @@ export class Gallery extends Component<{},GalleryState> {
                                 <img
                                     src={CloseIcon}
                                     alt="Close Icon"
-                                    onClick={() => this.setState({showSortFilterModal: false})}/>
+                                    onClick={() => updateState({showSortFilterModal: false})}/>
                             </span>
                         </button>
                     </div>
@@ -118,8 +168,8 @@ export class Gallery extends Component<{},GalleryState> {
                                     <input
                                         type="radio"
                                         name="sort"
-                                        checked={this.state.sortDirection === "newest"}
-                                        onClick={() => this.setState({ sortDirection: 'newest' })}
+                                        checked={state.sortDirection === "newest"}
+                                        onClick={() => updateState({ sortDirection: 'newest' })}
                                     />
                                     &nbsp;Newest
                                 </label>
@@ -127,8 +177,8 @@ export class Gallery extends Component<{},GalleryState> {
                                     <input
                                         type="radio"
                                         name="sort"
-                                        checked={this.state.sortDirection === "oldest"}
-                                        onClick={() => this.setState({ sortDirection: 'oldest' })}
+                                        checked={state.sortDirection === "oldest"}
+                                        onClick={() => updateState({ sortDirection: 'oldest' })}
                                     />
                                     &nbsp;Oldest
                                 </label>
@@ -141,7 +191,11 @@ export class Gallery extends Component<{},GalleryState> {
                                     {Subjects.map(subject =>
                                         <>
                                             <label class="checkbox">
-                                                <input type="checkbox" checked={this.state.subjectFilters.includes(subject)}  onClick={() => this.onClickSubject(subject)} />
+                                                <input
+                                                    type="checkbox"
+                                                    checked={state.subjectFilters.includes(subject)}
+                                                    onClick={() => onClickSubject(subject, state.subjectFilters, updateState)}
+                                                />
                                                 &nbsp;{subject}
                                             </label>
                                             <br />
@@ -155,7 +209,11 @@ export class Gallery extends Component<{},GalleryState> {
                                 {Mediums.map(medium =>
                                     <>
                                         <label className="checkbox">
-                                            <input type="checkbox" checked={this.state.mediumFilters.includes(medium)}  onClick={() => this.onClickMedium(medium)}/>
+                                            <input
+                                                type="checkbox"
+                                                checked={state.mediumFilters.includes(medium)}
+                                                onClick={() => onClickMedium(medium, state.mediumFilters, updateState)}
+                                            />
                                             &nbsp;{medium}
                                         </label>
                                         <br />
@@ -167,24 +225,22 @@ export class Gallery extends Component<{},GalleryState> {
             </div>
         </div>
 
-    render() {
-        return (
-            <>
-                <div className="is-flex is-justify-content-space-between is-align-items-center">
-                    <div className="title mt-3 ml-3 is-2">An Art Gallery</div>
-                    <img
-                        className="is-flex-grow-0"
-                        src={FilterIcon}
-                        alt="Icon to open filter/sort menu"
-                        onClick={() => this.setState({showSortFilterModal: true})}/>
-                </div>
-                <div className="subtitle ml-4">by: Zach Hensler</div>
-                <div className="columns is-multiline is-variable is-6 m-auto">
-                    {this.renderPhotoData()}
-                </div>
-                {this.renderSelectedPhotoModal()}
-                {this.renderSortFilterModal()}
-            </>
-        )
-    }
+    return (
+        <>
+            <div className="is-flex is-justify-content-space-between is-align-items-center">
+                <div className="title mt-3 ml-3 is-2">An Art Gallery</div>
+                <img
+                    className="is-flex-grow-0"
+                    src={FilterIcon}
+                    alt="Icon to open filter/sort menu"
+                    onClick={() => updateState({showSortFilterModal: true})}/>
+            </div>
+            <div className="subtitle ml-4">by: Zach Hensler</div>
+            <div className="columns is-multiline is-variable is-6 m-auto">
+                {renderPhotoData(filteredAndSortedPhotos)}
+            </div>
+            {renderSelectedPhotoModal()}
+            {renderSortFilterModal()}
+        </>
+    )
 }
