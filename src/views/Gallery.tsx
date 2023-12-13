@@ -4,6 +4,8 @@ import {useCallback, useMemo, useState} from "preact/hooks";
 import photoData, {Mediums, MediumsType, PhotoDataType, Subjects, SubjectsType} from "../constants/photoData.ts";
 import FilterIcon from '../assets/icons/FilterIcon.svg';
 import CloseIcon from '../assets/icons/CloseIcon.svg';
+import ArrowForward from '../assets/icons/ArrowForward.svg';
+import ArrowBack from '../assets/icons/ArrowBack.svg';
 import {useSwipeGestures} from "../hooks/useSwipeGestures.ts";
 
 /**
@@ -65,7 +67,7 @@ interface GalleryState {
     subjectFilters: SubjectsType[]
 }
 
-export const Gallery: FunctionalComponent = () =>  {
+export const Gallery: FunctionalComponent = () => {
     const [state, setState] = useState<GalleryState>({
         showSortFilterModal: false,
         selectedPhoto: null,
@@ -75,15 +77,15 @@ export const Gallery: FunctionalComponent = () =>  {
     });
 
     const filteredAndSortedPhotos = useMemo(() =>
-        photoData
-            .filter(checkPhotoForFilters(state.mediumFilters, state.subjectFilters))
-            .sort(comparePhotoByDate(state.sortDirection)),
+            photoData
+                .filter(checkPhotoForFilters(state.mediumFilters, state.subjectFilters))
+                .sort(comparePhotoByDate(state.sortDirection)),
         [state.mediumFilters, state.subjectFilters, state.sortDirection])
 
     const updateState = useCallback((newState: Partial<GalleryState>) =>
-        setState(prevState=> ({ ...prevState, ...newState })), []);
+        setState(prevState => ({...prevState, ...newState})), []);
 
-    const closeSelectedPhoto = () => updateState({ selectedPhoto: null });
+    const closeSelectedPhoto = () => updateState({selectedPhoto: null});
 
     const getIndexByPhoto = (searchPhoto: PhotoDataType) => filteredAndSortedPhotos.findIndex((p) => p.title === searchPhoto.title);
 
@@ -91,43 +93,48 @@ export const Gallery: FunctionalComponent = () =>  {
         ? filteredAndSortedPhotos[getIndexByPhoto(state.selectedPhoto) + 1]
         : null, [state.selectedPhoto]);
 
-    const previousPhoto =  useMemo(() => state.selectedPhoto
+    const previousPhoto = useMemo(() => state.selectedPhoto
         ? filteredAndSortedPhotos[getIndexByPhoto(state.selectedPhoto) - 1]
         : null, [state.selectedPhoto]);
 
     useSwipeGestures({
         handleDownSwipe: closeSelectedPhoto,
         handleUpSwipe: closeSelectedPhoto,
-        handleLeftSwipe: () => updateState({ selectedPhoto: nextPhoto }),
-        handleRightSwipe: () => updateState({ selectedPhoto: previousPhoto })
+        handleLeftSwipe: () => updateState({selectedPhoto: nextPhoto}),
+        handleRightSwipe: () => updateState({selectedPhoto: previousPhoto})
     });
 
-    const renderPhotoData = (photos: PhotoDataType[]) => photos
+    const renderPhotoCards = (photos: PhotoDataType[]) => photos
         .map(photo =>
-            <div className="card column is-one-third my-4">
-                <header className="card-header">
-                    <p className="card-header-title">{photo.title}</p>
+            <div class="card column is-one-third my-4">
+                <header class="card-header is-flex-direction-column">
+                    <p class="card-header-title is-centered">{photo.title} - {photo.date}</p>
+                    <div>
+                        {photo.medium.map(medium =>
+                            <span className="tag is-primary is-light m-2">{medium}</span>)}
+                    </div>
                 </header>
-                <div className="card-image" onClick={() => updateState({selectedPhoto: photo})}>
+                <div class="card-image">
                     <img src={photo.image} alt={photo.title}/>
                 </div>
-                <div className="card-content">
-                    {photo.description ? <p className="content">{photo?.description}</p> : <></>}
-                    <p className="content">Date: {photo.date}</p>
-                    <p className="content">
-                        Medium: {photo.medium.reduce<string>((prev, curr, idx) => idx > 0 ? `${prev}, ${curr}` : curr, '')}
-                    </p>
+                <div class="card-content">
+                    {photo.description ? <p class="content">{photo?.description}</p> : <></>}
+                    <div class="container has-text-centered">
+                        <button class="button is-info is-light" onClick={() => updateState({selectedPhoto: photo})}>
+                            See Full Image
+                        </button>
+                    </div>
                 </div>
             </div>)
 
     const renderSelectedPhotoModal = () => state.selectedPhoto
         ? <div class={`modal ${state.selectedPhoto ? 'is-active' : ''}`}>
             <div class="modal-background" onClick={closeSelectedPhoto}></div>
-            <div className="modal-content">
-                <div className={`card`}>
-                    <header className="card-header">
-                        <p className="card-header-title">{state.selectedPhoto.title} - {state.selectedPhoto.date}</p>
-                        <button className="card-header-icon">
+            <div class="modal-content">
+                <div class={`card`}>
+                    <header class="card-header">
+                        <p class="card-header-title">{state.selectedPhoto.title} - {state.selectedPhoto.date}</p>
+                        <button class="card-header-icon">
                             <span className="icon">
                                 <img
                                     src={CloseIcon}
@@ -136,7 +143,22 @@ export const Gallery: FunctionalComponent = () =>  {
                             </span>
                         </button>
                     </header>
-                    <div className="card-image">
+                    <div class="card-image">
+                        <div class="left-navigation-container"
+                             onClick={() => updateState({selectedPhoto: previousPhoto})}>
+                            <img
+                                src={ArrowBack}
+                                alt="Show Previous Photo"
+                                class="navigation-arrow-icon"
+                            />
+                        </div>
+                        <div class="right-navigation-container" onClick={() => updateState({selectedPhoto: nextPhoto})}>
+                            <img
+                                src={ArrowForward}
+                                alt="Show Next Photo"
+                                class="navigation-arrow-icon"
+                            />
+                        </div>
                         <img src={state.selectedPhoto.image} alt={state.selectedPhoto.title}/>
                     </div>
                 </div>
@@ -152,7 +174,7 @@ export const Gallery: FunctionalComponent = () =>  {
                     <div class="card-header is-flex is-justify-content-space-around is-align-items-center">
                         <p class="card-header-title">Sort and Filter</p>
                         <button class="card-header-icon">
-                            <span class="icon">
+                            <span className="icon">
                                 <img
                                     src={CloseIcon}
                                     alt="Close Icon"
@@ -160,33 +182,33 @@ export const Gallery: FunctionalComponent = () =>  {
                             </span>
                         </button>
                     </div>
-                    <div className="card-content">
-                        <div className="field">
-                            <label className="label">Sort</label>
-                            <div className="control">
-                                <label className="radio">
+                    <div class="card-content has-text-centered">
+                        <div class="field">
+                            <label class="label">Sort</label>
+                            <div class="control">
+                                <label class="radio">
                                     <input
                                         type="radio"
                                         name="sort"
                                         checked={state.sortDirection === "newest"}
-                                        onClick={() => updateState({ sortDirection: 'newest' })}
+                                        onClick={() => updateState({sortDirection: 'newest'})}
                                     />
                                     &nbsp;Newest
                                 </label>
-                                <label className="radio">
+                                <label class="radio">
                                     <input
                                         type="radio"
                                         name="sort"
                                         checked={state.sortDirection === "oldest"}
-                                        onClick={() => updateState({ sortDirection: 'oldest' })}
+                                        onClick={() => updateState({sortDirection: 'oldest'})}
                                     />
                                     &nbsp;Oldest
                                 </label>
                             </div>
                         </div>
-                        <div className="field">
-                            <label className="label">Filter Subject</label>
-                            <div className="control">
+                        <div class="field">
+                            <label class="label">Filter Subject</label>
+                            <div class="control">
                                 <label class="checkbox">
                                     {Subjects.map(subject =>
                                         <>
@@ -198,17 +220,17 @@ export const Gallery: FunctionalComponent = () =>  {
                                                 />
                                                 &nbsp;{subject}
                                             </label>
-                                            <br />
+                                            <br/>
                                         </>)}
                                 </label>
                             </div>
                         </div>
-                        <div className="field">
-                            <label className="label">Filter Medium</label>
-                            <div className="control">
+                        <div class="field">
+                            <label class="label">Filter Medium</label>
+                            <div class="control">
                                 {Mediums.map(medium =>
                                     <>
-                                        <label className="checkbox">
+                                        <label class="checkbox">
                                             <input
                                                 type="checkbox"
                                                 checked={state.mediumFilters.includes(medium)}
@@ -216,7 +238,7 @@ export const Gallery: FunctionalComponent = () =>  {
                                             />
                                             &nbsp;{medium}
                                         </label>
-                                        <br />
+                                        <br/>
                                     </>)}
                             </div>
                         </div>
@@ -225,19 +247,30 @@ export const Gallery: FunctionalComponent = () =>  {
             </div>
         </div>
 
+    const deletableTag = (text: string, handleDelete: () => void) =>
+        <span className="tag is-light is-info m-2 is-clickable" onClick={handleDelete}>
+            {text}
+            <button class="delete is-small" />
+        </span>
+
     return (
         <>
-            <div className="is-flex is-justify-content-space-between is-align-items-center">
-                <div className="title mt-3 ml-3 is-2">An Art Gallery</div>
-                <img
-                    className="is-flex-grow-0"
-                    src={FilterIcon}
-                    alt="Icon to open filter/sort menu"
-                    onClick={() => updateState({showSortFilterModal: true})}/>
-            </div>
-            <div className="subtitle ml-4">by: Zach Hensler</div>
-            <div className="columns is-multiline is-variable is-6 m-auto">
-                {renderPhotoData(filteredAndSortedPhotos)}
+            <div class="title mt-3 ml-3 is-2">An Art Gallery</div>
+            <div class="subtitle ml-4">by: Zach Hensler</div>
+            <button class="button is-primary is-light" onClick={() => updateState({showSortFilterModal: true})}>
+                <figure class="image is-32x32">
+                    <img src={FilterIcon} alt="Icon to open filter/sort menu"/>
+                </figure>
+                <span className="content">Sort and Filter</span>
+            </button>
+            <span
+                className="tag is-light is-info m-2 is-clickable"
+                onClick={() => updateState({sortDirection: state.sortDirection === 'newest' ? 'oldest' : 'newest'})}
+            >{state.sortDirection}</span>
+            {state.mediumFilters.map(m => deletableTag(m, () => onClickMedium(m, state.mediumFilters, updateState)))}
+            {state.subjectFilters.map(s => deletableTag(s, () => onClickSubject(s, state.subjectFilters, updateState)))}
+            <div class="columns is-multiline is-variable is-6 m-auto">
+                {renderPhotoCards(filteredAndSortedPhotos)}
             </div>
             {renderSelectedPhotoModal()}
             {renderSortFilterModal()}

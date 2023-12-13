@@ -22,7 +22,7 @@ export const useSwipeGestures = (callbacks: SwipeGestureCallbacks) => {
         yDown.current = firstTouch.clientY;
     }, []);
 
-    const handleTouchMove = useCallback((event: TouchEvent) => {
+    const handleTouchEnd = useCallback((event: TouchEvent) => {
 
         const xUp = event.changedTouches[0].clientX;
         const yUp = event.changedTouches[0].clientY;
@@ -51,11 +51,11 @@ export const useSwipeGestures = (callbacks: SwipeGestureCallbacks) => {
 
     useEffect(() => {
         document.addEventListener('touchstart', handleTouchStart);
-        document.addEventListener('touchend', handleTouchMove);
+        document.addEventListener('touchend', handleTouchEnd);
 
         return () => {
             document.removeEventListener('touchstart', handleTouchStart);
-            document.removeEventListener('touchend', handleTouchMove);
+            document.removeEventListener('touchend', handleTouchEnd);
         }
-    }, [handleTouchStart, handleTouchMove])
+    }, [handleTouchStart, handleTouchEnd])
 }
