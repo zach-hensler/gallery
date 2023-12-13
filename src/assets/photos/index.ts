@@ -17,6 +17,7 @@ import MountainLandscape from './2022_06_18-mountain-landscape.jpg';
 import PicturedRocks from './2022_11_21-pictured-rocks.jpg';
 import SunsetClouds from './2023_09_17-sunset-clouds.jpg';
 import PathThroughForest from './2023_11_22-forest.jpg';
+import BuggingOut from './2023_12_13-bugging-out.jpg';
 
 export {
     Zeus,
@@ -37,5 +38,6 @@ export {
     MountainLandscape,
     PicturedRocks,
     SunsetClouds,
-    PathThroughForest
+    PathThroughForest,
+    BuggingOut
 }
