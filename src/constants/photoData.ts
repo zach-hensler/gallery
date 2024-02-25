@@ -16,13 +16,21 @@ import {
     FallCreek,
     MountainLandscape,
     PicturedRocks,
-    SunsetClouds, PathThroughForest, BuggingOut
+    SunsetClouds,
+    PathThroughForest,
+    BuggingOut,
+    PurpleRose,
+    Bonsai,
+    Magikarp,
+    BigSpeckles,
+    ColoredCats,
+    ChillSpeckles
 } from "../assets/photos";
 
-export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic'] as const
+export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
 
-export const Subjects = ['landscape', 'still-life', 'animal', 'scene'] as const
+export const Subjects = ['landscape', 'still-life', 'animal', 'character', 'scene'] as const
 export type SubjectsType = typeof Subjects[number]
 
 export interface PhotoDataType {
@@ -52,7 +60,7 @@ const photoData: PhotoDataType[] = [
         image: Bokoblin,
         date: '10/16/2023',
         medium: ['colored-pencil'],
-        subject: 'animal',
+        subject: 'character',
         title: 'Blue Bokoblin'
     },
     {
@@ -95,7 +103,7 @@ const photoData: PhotoDataType[] = [
         image: ColorfulKoroks,
         date: '07/01/2023',
         medium: ['colored-pencil'],
-        subject: 'animal',
+        subject: 'character',
         title: 'Colorful Koroks'
     },
     {
@@ -116,7 +124,7 @@ const photoData: PhotoDataType[] = [
         image: SurprisedPikachu,
         date: '11/23/2023',
         medium: ['marker'],
-        subject: 'animal',
+        subject: 'character',
         title: 'Surprised Pikachu'
     },
     {
@@ -179,6 +187,50 @@ const photoData: PhotoDataType[] = [
         medium: ['colored-pencil'],
         subject: 'scene',
         title: 'Bugging Out'
+    },
+    {
+        image: PurpleRose,
+        date: '01/03/2024',
+        medium: ['marker'],
+        subject: 'still-life',
+        title: 'A Purple Rose'
+    },
+    {
+        image: Bonsai,
+        date: '01/15/2024',
+        medium: ['marker'],
+        subject: 'still-life',
+        title: 'Bonsai'
+    },
+    {
+        image: Magikarp,
+        date: '01/20/2024',
+        medium: ['marker'],
+        subject: 'scene',
+        title: 'Aquarium con Magikarp'
+    },
+    {
+        image: BigSpeckles,
+        date: '01/31/2024',
+        medium: ['marker'],
+        subject: 'animal',
+        title: 'Large Lizard Lounging'
+    },
+    {
+        image: ColoredCats,
+        date: '02/11/2024',
+        medium: ['acrylic'],
+        subject: 'animal',
+        title: 'Colored Cats!',
+        description: 'Pictured are my two cats: Ivy and Zeus. The idea was initially inspired by the works of Andy Warhol, and ' +
+            'it continued to evolve into it\'s current state over several months of practice and preparation.'
+    },
+    {
+        image: ChillSpeckles,
+        date: '02/25/2024',
+        medium: ['watercolor'],
+        subject: 'animal',
+        title: 'Speckles in Watercolor'
     }
 ]
 
