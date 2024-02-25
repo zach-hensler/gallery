@@ -18,6 +18,12 @@ import PicturedRocks from './2022_11_21-pictured-rocks.jpg';
 import SunsetClouds from './2023_09_17-sunset-clouds.jpg';
 import PathThroughForest from './2023_11_22-forest.jpg';
 import BuggingOut from './2023_12_13-bugging-out.jpg';
+import PurpleRose from './2024_01_03-purple-rose.jpg';
+import Bonsai from './2024_01_15-bonsai.jpg';
+import Magikarp from './2024_01_20-Magikarp-fishtank.jpg';
+import BigSpeckles from './2024_01_31-Big-Speckles.jpg';
+import ColoredCats from './2024_02_11-colored-cats.jpg';
+import ChillSpeckles from './2024_02_25-Chill-Speckles.jpg';
 
 export {
     Zeus,
@@ -39,5 +45,11 @@ export {
     PicturedRocks,
     SunsetClouds,
     PathThroughForest,
-    BuggingOut
+    BuggingOut,
+    PurpleRose,
+    Bonsai,
+    Magikarp,
+    BigSpeckles,
+    ColoredCats,
+    ChillSpeckles
 }
