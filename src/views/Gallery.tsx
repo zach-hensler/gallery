@@ -7,6 +7,7 @@ import CloseIcon from '../assets/icons/CloseIcon.svg';
 import ArrowForward from '../assets/icons/ArrowForward.svg';
 import ArrowBack from '../assets/icons/ArrowBack.svg';
 import {useSwipeGestures} from "../hooks/useSwipeGestures.ts";
+import {Image} from "../components/Image.tsx";
 
 /**
  * Curried function for sorting photos by date
@@ -115,7 +116,7 @@ export const Gallery: FunctionalComponent = () => {
                     </div>
                 </header>
                 <div class="card-image">
-                    <img src={photo.image} alt={photo.title}/>
+                    <Image src={photo.image} alt={photo.title}/>
                 </div>
                 <div class="card-content">
                     {photo.description ? <p class="content">{photo?.description}</p> : <></>}
