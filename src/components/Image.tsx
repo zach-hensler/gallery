@@ -6,18 +6,37 @@ interface ImageProps {
     alt: string
 }
 
+type LoadingColors = "red"|"green"|"blue";
+const getLoadingColor = (): LoadingColors => {
+    const randInt = Math.floor(Math.random() * 3);
+    console.log(randInt)
+    switch (randInt) {
+        case 0:
+            return "red";
+        case 1:
+            return "green";
+        case 2:
+            return "blue";
+        default:
+            console.error(`Unexpected int, received: ${randInt}`);
+            return "blue";
+    }
+};
+
 export const Image: FunctionalComponent<ImageProps> = ({src, alt}) => {
+    const [onScreen, setOnScreen] = useState<boolean>(false);
     const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+    const [loadingColor] = useState<LoadingColors>(getLoadingColor())
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleLazyLoading = useCallback(() => {
-        if (hasLoaded) return;
+        if (onScreen) return;
 
         const clientRect = containerRef.current?.getBoundingClientRect();
-        if (!clientRect) return;
+        if (!clientRect) return;``
         if (clientRect.y > window.scrollY + window.innerHeight) return;
 
-        setHasLoaded(true);
+        setOnScreen(true);
     }, [])
 
     useEffect(() => {
@@ -27,7 +46,13 @@ export const Image: FunctionalComponent<ImageProps> = ({src, alt}) => {
         return () => document.removeEventListener(scrollEventName, handleLazyLoading);
     }, [handleLazyLoading]);
 
+    const loadingPlaceholder = <div className={`loading-image ${loadingColor}`} ref={containerRef}></div>;
+
+    if (!onScreen) return loadingPlaceholder;
     return hasLoaded
         ? <img src={src} alt={alt} loading="lazy"/>
-        : <div ref={containerRef}></div>;
+        : <>
+            <img className="is-hidden" onLoad={() => setHasLoaded(true)} src={src} alt={alt} loading="lazy"/>
+            {loadingPlaceholder}
+        </>
 };
