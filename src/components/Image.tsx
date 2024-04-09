@@ -33,7 +33,7 @@ export const Image: FunctionalComponent<ImageProps> = ({src, alt}) => {
         if (onScreen) return;
 
         const clientRect = containerRef.current?.getBoundingClientRect();
-        if (!clientRect) return;``
+        if (!clientRect) return;
         if (clientRect.y > window.scrollY + window.innerHeight) return;
 
         setOnScreen(true);
