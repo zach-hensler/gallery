@@ -24,7 +24,7 @@ import {
     Magikarp,
     BigSpeckles,
     ColoredCats,
-    ChillSpeckles
+    ChillSpeckles, GraphitePigeon
 } from "../assets/photos";
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
@@ -231,6 +231,13 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor'],
         subject: 'animal',
         title: 'Speckles in Watercolor'
+    },
+    {
+        image: GraphitePigeon,
+        date: '04/01/2024',
+        medium: ['graphite'],
+        subject: 'animal',
+        title: 'A White Dove is a Pigeon'
     }
 ]
 
