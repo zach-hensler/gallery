@@ -24,6 +24,7 @@ import Magikarp from './2024_01_20-Magikarp-fishtank.jpg';
 import BigSpeckles from './2024_01_31-Big-Speckles.jpg';
 import ColoredCats from './2024_02_11-colored-cats.jpg';
 import ChillSpeckles from './2024_02_25-Chill-Speckles.jpg';
+import GraphitePigeon from './2024_04_01_pigeon.jpg';
 
 export {
     Zeus,
@@ -51,5 +52,6 @@ export {
     Magikarp,
     BigSpeckles,
     ColoredCats,
-    ChillSpeckles
+    ChillSpeckles,
+    GraphitePigeon
 }

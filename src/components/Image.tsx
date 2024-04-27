@@ -1,5 +1,5 @@
 import { FunctionalComponent } from "preact";
-import {useCallback, useEffect, useRef, useState} from "preact/hooks";
+import {useEffect, useRef, useState} from "preact/hooks";
 
 interface ImageProps {
     src: string,
@@ -9,7 +9,6 @@ interface ImageProps {
 type LoadingColors = "red"|"green"|"blue";
 const getLoadingColor = (): LoadingColors => {
     const randInt = Math.floor(Math.random() * 3);
-    console.log(randInt)
     switch (randInt) {
         case 0:
             return "red";
@@ -18,7 +17,7 @@ const getLoadingColor = (): LoadingColors => {
         case 2:
             return "blue";
         default:
-            console.error(`Unexpected int, received: ${randInt}`);
+            console.error(`Unexpected int value, received: ${randInt}`);
             return "blue";
     }
 };
@@ -29,22 +28,23 @@ export const Image: FunctionalComponent<ImageProps> = ({src, alt}) => {
     const [loadingColor] = useState<LoadingColors>(getLoadingColor())
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const handleLazyLoading = useCallback(() => {
-        if (onScreen) return;
-
-        const clientRect = containerRef.current?.getBoundingClientRect();
-        if (!clientRect) return;
-        if (clientRect.y > window.scrollY + window.innerHeight) return;
-
-        setOnScreen(true);
-    }, [])
-
     useEffect(() => {
         const scrollEventName = "scroll";
+        const handleLazyLoading = () => {
+            if (onScreen || hasLoaded) return;
+            console.log(`Loading: ${alt}`)
+
+            const clientRect = containerRef.current?.getBoundingClientRect();
+            if (!clientRect) return;
+            if (clientRect.y > window.scrollY + window.innerHeight) return;
+
+            setOnScreen(true);
+            document.removeEventListener(scrollEventName, handleLazyLoading)
+        }
         handleLazyLoading();
         document.addEventListener(scrollEventName, handleLazyLoading);
         return () => document.removeEventListener(scrollEventName, handleLazyLoading);
-    }, [handleLazyLoading]);
+    }, []);
 
     const loadingPlaceholder = <div className={`loading-image ${loadingColor}`} ref={containerRef}></div>;
 
