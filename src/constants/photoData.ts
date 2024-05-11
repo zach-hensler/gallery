@@ -24,7 +24,10 @@ import {
     Magikarp,
     BigSpeckles,
     ColoredCats,
-    ChillSpeckles, GraphitePigeon
+    ChillSpeckles,
+    GraphitePigeon,
+    Beeeeees,
+    LightningBug,
 } from "../assets/photos";
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
@@ -238,6 +241,20 @@ const photoData: PhotoDataType[] = [
         medium: ['graphite'],
         subject: 'animal',
         title: 'A White Dove is a Pigeon'
+    },
+    {
+        image: Beeeeees,
+        date: '05/04/2024',
+        medium: ['watercolor', 'colored-pencil'],
+        subject: 'scene',
+        title: 'The Bees Knees'
+    },
+    {
+        image: LightningBug,
+        date: '05/11/2024',
+        medium: ['watercolor'],
+        subject: 'scene',
+        title: 'Illuminated'
     }
 ]
 
