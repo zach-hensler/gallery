@@ -25,6 +25,8 @@ import BigSpeckles from './2024_01_31-Big-Speckles.jpg';
 import ColoredCats from './2024_02_11-colored-cats.jpg';
 import ChillSpeckles from './2024_02_25-Chill-Speckles.jpg';
 import GraphitePigeon from './2024_04_01_pigeon.jpg';
+import Beeeeees from './2024_05_04-beeeeees.jpg';
+import LightningBug from './2024_05_11-lightnin-bug.jpg';
 
 export {
     Zeus,
@@ -53,5 +55,7 @@ export {
     BigSpeckles,
     ColoredCats,
     ChillSpeckles,
-    GraphitePigeon
+    GraphitePigeon,
+    Beeeeees,
+    LightningBug,
 }
