@@ -27,6 +27,7 @@ import ChillSpeckles from './2024_02_25-Chill-Speckles.jpg';
 import GraphitePigeon from './2024_04_01_pigeon.jpg';
 import Beeeeees from './2024_05_04-beeeeees.jpg';
 import LightningBug from './2024_05_11-lightnin-bug.jpg';
+import ShadowedCave from './2024_05_18-cave.jpg';
 
 export {
     Zeus,
@@ -58,4 +59,5 @@ export {
     GraphitePigeon,
     Beeeeees,
     LightningBug,
+    ShadowedCave,
 }

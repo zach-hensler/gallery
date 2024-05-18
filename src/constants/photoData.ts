@@ -27,7 +27,7 @@ import {
     ChillSpeckles,
     GraphitePigeon,
     Beeeeees,
-    LightningBug,
+    LightningBug, ShadowedCave,
 } from "../assets/photos";
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
@@ -255,6 +255,13 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor'],
         subject: 'scene',
         title: 'Illuminated'
+    },
+    {
+        image: ShadowedCave,
+        date: "05/18/2024",
+        medium: ['watercolor'],
+        subject: 'scene',
+        title: 'A Lone Light'
     }
 ]
 
