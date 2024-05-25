@@ -115,7 +115,7 @@ export const Gallery: FunctionalComponent = () => {
                             <span className="tag is-primary is-light m-2">{medium}</span>)}
                     </div>
                 </header>
-                <div class="card-image">
+                <div class="card-image" onClick={() => updateState({selectedPhoto: photo})}>
                     <Image src={photo.image} alt={photo.title}/>
                 </div>
                 <div class="card-content">

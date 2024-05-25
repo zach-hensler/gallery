@@ -1,39 +1,39 @@
-import {
-    Zeus,
-    Bokoblin,
-    Speckles,
-    Shrine,
-    WineGlass,
-    Leaves,
-    RyansRock,
-    LizardTime,
-    ColorfulKoroks,
-    Chipmunk,
-    SleepyMen,
-    SurprisedPikachu,
-    SunsetLandscape,
-    WinterLandscape,
-    FallCreek,
-    MountainLandscape,
-    PicturedRocks,
-    SunsetClouds,
-    PathThroughForest,
-    BuggingOut,
-    PurpleRose,
-    Bonsai,
-    Magikarp,
-    BigSpeckles,
-    ColoredCats,
-    ChillSpeckles,
-    GraphitePigeon,
-    Beeeeees,
-    LightningBug, ShadowedCave,
-} from "../assets/photos";
+import Zeus from '../assets/photos/2023_11_22-Zeus.jpg';
+import Shrine from '../assets/photos/2023_08_09-Shrine.jpg';
+import WineGlass from '../assets/photos/2023_08_17-wineglass.jpg';
+import Speckles from '../assets/photos/2023_10_10-Speckles.jpg';
+import Bokoblin from '../assets/photos/2023_10_16-bokoblin.jpg';
+import Leaves from '../assets/photos/2022_08_07-leaves.jpg';
+import RyansRock from '../assets/photos/2022_08_20-ryans-rock.jpg';
+import LizardTime from '../assets/photos/2023_05_23-its-lizard-time.jpg';
+import ColorfulKoroks from '../assets/photos/2023_07_01-koroks.jpg';
+import Chipmunk from '../assets/photos/2023_07_09-chipmunk.jpg';
+import SleepyMen from '../assets/photos/2023_07_19-sleepy-men.jpg';
+import SurprisedPikachu from '../assets/photos/2023_11_23-Surprised-Pikachu.jpg';
+import SunsetLandscape from '../assets/photos/2021_11_19-sunset-landscape.jpg';
+import WinterLandscape from '../assets/photos/2022_01_15-winter-landscape.jpg';
+import FallCreek from '../assets/photos/2022_02_19-fall-creek.jpg';
+import MountainLandscape from '../assets/photos/2022_06_18-mountain-landscape.jpg';
+import PicturedRocks from '../assets/photos/2022_11_21-pictured-rocks.jpg';
+import SunsetClouds from '../assets/photos/2023_09_17-sunset-clouds.jpg';
+import PathThroughForest from '../assets/photos/2023_11_22-forest.jpg';
+import BuggingOut from '../assets/photos/2023_12_13-bugging-out.jpg';
+import PurpleRose from '../assets/photos/2024_01_03-purple-rose.jpg';
+import Bonsai from '../assets/photos/2024_01_15-bonsai.jpg';
+import Magikarp from '../assets/photos/2024_01_20-Magikarp-fishtank.jpg';
+import BigSpeckles from '../assets/photos/2024_01_31-Big-Speckles.jpg';
+import ColoredCats from '../assets/photos/2024_02_11-colored-cats.jpg';
+import ChillSpeckles from '../assets/photos/2024_02_25-Chill-Speckles.jpg';
+import GraphitePigeon from '../assets/photos/2024_04_01_pigeon.jpg';
+import Beeeeees from '../assets/photos/2024_05_04-beeeeees.jpg';
+import LightningBug from '../assets/photos/2024_05_11-lightnin-bug.jpg';
+import ShadowedCave from '../assets/photos/2024_05_18-cave.jpg';
+import Chaos from '../assets/photos/2024_05_25-chaos.jpg'
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
 
-export const Subjects = ['landscape', 'still-life', 'animal', 'character', 'scene'] as const
+export const Subjects = ['landscape', 'still-life', 'animal', 'character', 'scene', 'abstract'] as const
 export type SubjectsType = typeof Subjects[number]
 
 export interface PhotoDataType {
@@ -262,6 +262,13 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor'],
         subject: 'scene',
         title: 'A Lone Light'
+    },
+    {
+        image: Chaos,
+        date: "05/25/2024",
+        medium: ['watercolor'],
+        subject: 'abstract',
+        title: 'Chaos'
     }
 ]
 
