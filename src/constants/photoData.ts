@@ -28,7 +28,8 @@ import GraphitePigeon from '../assets/photos/2024_04_01_pigeon.jpg';
 import Beeeeees from '../assets/photos/2024_05_04-beeeeees.jpg';
 import LightningBug from '../assets/photos/2024_05_11-lightnin-bug.jpg';
 import ShadowedCave from '../assets/photos/2024_05_18-cave.jpg';
-import Chaos from '../assets/photos/2024_05_25-chaos.jpg'
+import Chaos from '../assets/photos/2024_05_25-chaos.jpg';
+import Ghosts from '../assets/photos/2024_06_02-ghosts.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -269,6 +270,13 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor'],
         subject: 'abstract',
         title: 'Chaos'
+    },
+    {
+        image: Ghosts,
+        date: "06/02/2024",
+        medium: ['watercolor', 'colored-pencil'],
+        subject: 'scene',
+        title: 'Ghosts'
     }
 ]
 
