@@ -30,6 +30,7 @@ import LightningBug from '../assets/photos/2024_05_11-lightnin-bug.jpg';
 import ShadowedCave from '../assets/photos/2024_05_18-cave.jpg';
 import Chaos from '../assets/photos/2024_05_25-chaos.jpg';
 import Ghosts from '../assets/photos/2024_06_02-ghosts.jpg';
+import SunsetMountain from '../assets/photos/2024_05_18-sunset-moutain.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -277,6 +278,13 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor', 'colored-pencil'],
         subject: 'scene',
         title: 'Ghosts'
+    },
+    {
+        image: SunsetMountain,
+        date: "06/15/2024",
+        medium: ['watercolor'],
+        subject: 'landscape',
+        title: 'Sunset Mountain'
     }
 ]
 
