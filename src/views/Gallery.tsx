@@ -25,8 +25,10 @@ export const comparePhotoByDate = (sortDirection: GalleryState['sortDirection'])
 export const checkPhotoForFilters =
     (mediumFilters: GalleryState['mediumFilters'], subjectFilters: GalleryState['subjectFilters']) =>
         (photo: PhotoDataType): boolean =>
-    !!((!subjectFilters.length || subjectFilters.find(sf => photo.subject.includes(sf))) &&
-    (!mediumFilters.length || mediumFilters.find(medium => photo.medium.includes(medium))))
+            !!(
+                (!subjectFilters.length || subjectFilters.find(sf => photo.subject.includes(sf))) &&
+                (!mediumFilters.length || mediumFilters.find(medium => photo.medium.includes(medium)))
+            )
 
 /**
  * When a subject is clicked, it will toggle its status as a filter
