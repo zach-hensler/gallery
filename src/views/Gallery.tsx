@@ -22,8 +22,10 @@ export const comparePhotoByDate = (sortDirection: GalleryState['sortDirection'])
  * @param mediumFilters - Filters to apply based on the photo's medium
  * @param subjectFilters - Filters to apply based on the photo's subject
  */
-export const checkPhotoForFilters = (mediumFilters: GalleryState['mediumFilters'], subjectFilters: GalleryState['subjectFilters']) => (photo: PhotoDataType): boolean =>
-    !!((!subjectFilters.length || subjectFilters.includes(photo.subject)) &&
+export const checkPhotoForFilters =
+    (mediumFilters: GalleryState['mediumFilters'], subjectFilters: GalleryState['subjectFilters']) =>
+        (photo: PhotoDataType): boolean =>
+    !!((!subjectFilters.length || subjectFilters.find(sf => photo.subject.includes(sf))) &&
     (!mediumFilters.length || mediumFilters.find(medium => photo.medium.includes(medium))))
 
 /**
