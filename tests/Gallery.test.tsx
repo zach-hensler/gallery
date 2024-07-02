@@ -8,7 +8,7 @@ describe('comparePhotoByDate function from views/Gallery', () => {
         title: '',
         date: '',
         medium: [],
-        subject: 'landscape'
+        subject: ['landscape']
     }
     const photos: PhotoDataType[] = [
         { ...basePhoto, date: '10/10/2020', title: 'Second' },
@@ -39,14 +39,14 @@ describe('checkPhotoForFilters function from views/Gallery', () => {
             title: '',
             date: '',
             medium: ['colored-pencil'],
-            subject: 'landscape'
+            subject: ['landscape']
         },
         {
             image: '',
             title: '',
             date: '',
             medium: ['colored-pencil', 'marker'],
-            subject: 'animal'
+            subject: ['animal']
         },
     ]
     test('should keep photos when no filters are applied', () => {
@@ -58,7 +58,7 @@ describe('checkPhotoForFilters function from views/Gallery', () => {
     test('should filter photos not containing subject filters', () => {
         const filteredPhotos = photos.filter(checkPhotoForFilters([], ['landscape']))
         expect(filteredPhotos.length).toBe(1);
-        expect(filteredPhotos[0].subject).toBe('landscape');
+        expect(filteredPhotos[0].subject).toEqual(['landscape']);
     })
     test('should keep photos containing medium filters', () => {
         expect(photos.filter(checkPhotoForFilters(['colored-pencil'], [])).length).toBe(2)
