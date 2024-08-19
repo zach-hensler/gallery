@@ -33,6 +33,7 @@ import Ghosts from '../assets/photos/2024_06_02-ghosts.jpg';
 import SunsetMountain from '../assets/photos/2024_05_18-sunset-moutain.jpg';
 import Hornet from '../assets/photos/2024_06_25-hornet.jpg';
 import WooperLotad from '../assets/photos/2024_06_27-wooper-lotad.jpg';
+import BirthdayMipha from '../assets/photos/2024_07_24-Mipha.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -301,6 +302,13 @@ const photoData: PhotoDataType[] = [
         medium: ['colored-pencil'],
         subject: ['scene', 'character'],
         title: 'Wooper and Lotad'
+    },
+    {
+        image: BirthdayMipha,
+        date: "07/24/2024",
+        medium: ['watercolor'],
+        subject: ['animal'],
+        title: 'Miss Mipha!'
     }
 ]
 
