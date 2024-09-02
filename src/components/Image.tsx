@@ -32,7 +32,6 @@ export const Image: FunctionalComponent<ImageProps> = ({src, alt}) => {
         const scrollEventName = "scroll";
         const handleLazyLoading = () => {
             if (onScreen || hasLoaded) return;
-            console.log(`Loading: ${alt}`)
 
             const clientRect = containerRef.current?.getBoundingClientRect();
             if (!clientRect) return;
