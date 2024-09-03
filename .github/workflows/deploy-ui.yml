@@ -15,7 +15,8 @@ jobs:
       - run: git config --global user.email zhensler12@gmail.com
       - run: git config --global user.name ${{ github.actor }}
       - run: npm install
-      - run: yarn build
+      - run: npm run test
+      - run: npm run build
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

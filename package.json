@@ -1,13 +1,14 @@
 {
   "name": "Gallery",
-  "private": true,
+  "private": false,
   "version": "1.0.0",
   "type": "module",
   "homepage": "https://gallery.zach-hensler.com",
   "scripts": {
     "dev": "vite",
     "test": "vitest --run",
-    "build": "tsc && npm run test && vite build",
+    "createCNAME": "echo gallery.zach-hensler.com > ./build/CNAME",
+    "build": "tsc && vite build && npm run createCNAME",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
