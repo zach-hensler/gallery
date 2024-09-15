@@ -34,6 +34,7 @@ import SunsetMountain from '../assets/photos/2024_05_18-sunset-moutain.jpg';
 import Hornet from '../assets/photos/2024_06_25-hornet.jpg';
 import WooperLotad from '../assets/photos/2024_06_27-wooper-lotad.jpg';
 import BirthdayMipha from '../assets/photos/2024_07_24-Mipha.jpg';
+import Waterlily from '../assets/photos/2024_09_13-waterlily.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -309,6 +310,13 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor'],
         subject: ['animal'],
         title: 'Miss Mipha!'
+    },
+    {
+        image: Waterlily,
+        date: "09/13/2024",
+        medium: ['watercolor'],
+        subject: ['landscape'],
+        title: 'Waterlily'
     }
 ]
 
