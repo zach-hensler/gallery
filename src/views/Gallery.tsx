@@ -4,9 +4,6 @@ import {useCallback, useMemo, useState} from "preact/hooks";
 import photoData, {Mediums, MediumsType, PhotoDataType, Subjects, SubjectsType} from "../constants/photoData.ts";
 import FilterIcon from '../assets/icons/FilterIcon.svg';
 import CloseIcon from '../assets/icons/CloseIcon.svg';
-import ArrowForward from '../assets/icons/ArrowForward.svg';
-import ArrowBack from '../assets/icons/ArrowBack.svg';
-import {useSwipeGestures} from "../hooks/useSwipeGestures.ts";
 import {Image} from "../components/Image.tsx";
 
 /**
@@ -66,7 +63,6 @@ const onClickMedium = (
 
 interface GalleryState {
     showSortFilterModal: boolean
-    selectedPhoto: PhotoDataType|null
     sortDirection: 'newest'|'oldest',
     mediumFilters: MediumsType[]
     subjectFilters: SubjectsType[]
@@ -75,7 +71,6 @@ interface GalleryState {
 export const Gallery: FunctionalComponent = () => {
     const [state, setState] = useState<GalleryState>({
         showSortFilterModal: false,
-        selectedPhoto: null,
         sortDirection: 'newest',
         mediumFilters: [],
         subjectFilters: []
@@ -90,89 +85,24 @@ export const Gallery: FunctionalComponent = () => {
     const updateState = useCallback((newState: Partial<GalleryState>) =>
         setState(prevState => ({...prevState, ...newState})), []);
 
-    const closeSelectedPhoto = () => updateState({selectedPhoto: null});
-
-    const getIndexByPhoto = (searchPhoto: PhotoDataType) => filteredAndSortedPhotos.findIndex((p) => p.title === searchPhoto.title);
-
-    const nextPhoto = useMemo(() => state.selectedPhoto
-        ? filteredAndSortedPhotos[getIndexByPhoto(state.selectedPhoto) + 1]
-        : null, [state.selectedPhoto]);
-
-    const previousPhoto = useMemo(() => state.selectedPhoto
-        ? filteredAndSortedPhotos[getIndexByPhoto(state.selectedPhoto) - 1]
-        : null, [state.selectedPhoto]);
-
-    useSwipeGestures({
-        handleDownSwipe: closeSelectedPhoto,
-        handleUpSwipe: closeSelectedPhoto,
-        handleLeftSwipe: () => updateState({selectedPhoto: nextPhoto}),
-        handleRightSwipe: () => updateState({selectedPhoto: previousPhoto})
-    });
-
     const renderPhotoCards = (photos: PhotoDataType[]) => photos
         .map(photo =>
-            <div class="card column is-one-third my-4">
-                <header class="card-header is-flex-direction-column">
-                    <p class="card-header-title is-centered">{photo.title} - {photo.date}</p>
-                    <div>
+            <div className="card column is-one-third my-4">
+                <header class="card-header">
+                    <p class="card-header-title">{photo.title} - {photo.date}</p>
+                    <span class="card-header-icon">
                         {photo.medium.map(medium =>
                             <span className="tag is-primary is-light m-2">{medium}</span>)}
-                    </div>
+                    </span>
                 </header>
-                <div class="card-image" onClick={() => updateState({selectedPhoto: photo})}>
-                    <Image src={photo.image} alt={photo.title}/>
-                </div>
-                <div class="card-content">
-                    {photo.description ? <p class="content">{photo?.description}</p> : <></>}
-                    <div class="container has-text-centered">
-                        <button class="button is-info is-light" onClick={() => updateState({selectedPhoto: photo})}>
-                            See Full Image
-                        </button>
-                    </div>
+                {photo.description ? <p class="card-content">{photo?.description}</p> : <></>}
+                <div className="card-image">
+                <Image src={photo.image} alt={photo.title}/>
                 </div>
             </div>)
 
-    const renderSelectedPhotoModal = () => state.selectedPhoto
-        ? <div class={`modal ${state.selectedPhoto ? 'is-active' : ''}`}>
-            <div class="modal-background" onClick={closeSelectedPhoto}></div>
-            <div class="modal-content">
-                <div class={`card`}>
-                    <header class="card-header">
-                        <p class="card-header-title">{state.selectedPhoto.title} - {state.selectedPhoto.date}</p>
-                        <button class="card-header-icon">
-                            <span className="icon">
-                                <img
-                                    src={CloseIcon}
-                                    alt="Close Icon"
-                                    onClick={closeSelectedPhoto}/>
-                            </span>
-                        </button>
-                    </header>
-                    <div class="card-image">
-                        <div class="left-navigation-container"
-                             onClick={() => updateState({selectedPhoto: previousPhoto})}>
-                            <img
-                                src={ArrowBack}
-                                alt="Show Previous Photo"
-                                class="navigation-arrow-icon"
-                            />
-                        </div>
-                        <div class="right-navigation-container" onClick={() => updateState({selectedPhoto: nextPhoto})}>
-                            <img
-                                src={ArrowForward}
-                                alt="Show Next Photo"
-                                class="navigation-arrow-icon"
-                            />
-                        </div>
-                        <img src={state.selectedPhoto.image} alt={state.selectedPhoto.title}/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        : <></>;
-
     const renderSortFilterModal = () =>
-        <div class={`modal ${(state.showSortFilterModal && !state.selectedPhoto) ? 'is-active' : ''}`}>
+        <div class={`modal ${state.showSortFilterModal ? 'is-active' : ''}`}>
             <div class="modal-background" onClick={() => updateState({showSortFilterModal: false})}></div>
             <div class="modal-content">
                 <div class="card">
@@ -277,7 +207,6 @@ export const Gallery: FunctionalComponent = () => {
             <div class="columns is-multiline is-variable is-6 m-auto">
                 {renderPhotoCards(filteredAndSortedPhotos)}
             </div>
-            {renderSelectedPhotoModal()}
             {renderSortFilterModal()}
         </>
     )
