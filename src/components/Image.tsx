@@ -1,5 +1,5 @@
 import { FunctionalComponent } from "preact";
-import {useEffect, useRef, useState} from "preact/hooks";
+import {useRef, useState} from "preact/hooks";
 
 interface ImageProps {
     src: string,
