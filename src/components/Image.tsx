@@ -23,31 +23,31 @@ const getLoadingColor = (): LoadingColors => {
 };
 
 export const Image: FunctionalComponent<ImageProps> = ({src, alt}) => {
-    const [onScreen, setOnScreen] = useState<boolean>(false);
-    const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+    // const [onScreen, setOnScreen] = useState<boolean>(false);
+    const [hasLoaded, setHasLoaded] = useState<boolean>(true);
     const [loadingColor] = useState<LoadingColors>(getLoadingColor())
     const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const scrollEventName = "scroll";
-        const handleLazyLoading = () => {
-            if (onScreen || hasLoaded) return;
-
-            const clientRect = containerRef.current?.getBoundingClientRect();
-            if (!clientRect) return;
-            if (clientRect.y > window.scrollY + window.innerHeight) return;
-
-            setOnScreen(true);
-            document.removeEventListener(scrollEventName, handleLazyLoading)
-        }
-        handleLazyLoading();
-        document.addEventListener(scrollEventName, handleLazyLoading);
-        return () => document.removeEventListener(scrollEventName, handleLazyLoading);
-    }, []);
+    // useEffect(() => {
+    //     const scrollEventName = "scroll";
+    //     const handleLazyLoading = () => {
+    //         if (onScreen || hasLoaded) return;
+    //
+    //         const clientRect = containerRef.current?.getBoundingClientRect();
+    //         if (!clientRect) return;
+    //         if (clientRect.y > window.scrollY + window.innerHeight) return;
+    //
+    //         setOnScreen(true);
+    //         document.removeEventListener(scrollEventName, handleLazyLoading)
+    //     }
+    //     handleLazyLoading();
+    //     document.addEventListener(scrollEventName, handleLazyLoading);
+    //     return () => document.removeEventListener(scrollEventName, handleLazyLoading);
+    // }, []);
 
     const loadingPlaceholder = <div className={`loading-image ${loadingColor}`} ref={containerRef}></div>;
 
-    if (!onScreen) return loadingPlaceholder;
+    // if (!onScreen) return loadingPlaceholder;
     return hasLoaded
         ? <img src={src} alt={alt} loading="lazy"/>
         : <>
