@@ -35,6 +35,9 @@ import Hornet from '../assets/photos/2024_06_25-hornet.jpg';
 import WooperLotad from '../assets/photos/2024_06_27-wooper-lotad.jpg';
 import BirthdayMipha from '../assets/photos/2024_07_24-Mipha.jpg';
 import Waterlily from '../assets/photos/2024_09_13-waterlily.jpg';
+import FrogLog from '../assets/photos/2025_01_16-frog-on-log.jpg';
+import Sailboat from '../assets/photos/2025_07_08-sailboat.jpg';
+import KoiPond from '../assets/photos/2025_07_25-koi-pond.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -317,6 +320,27 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor'],
         subject: ['landscape'],
         title: 'Waterlily'
+    },
+    {
+        image: FrogLog,
+        date: "01/16/2025",
+        medium: ['watercolor'],
+        subject: ['animal'],
+        title: 'Frog on a Log'
+    },
+    {
+        image: Sailboat,
+        date: "07/08/2025",
+        medium: ['watercolor'],
+        subject: ['scene', 'landscape'],
+        title: 'Out Boatin\''
+    },
+    {
+        image: KoiPond,
+        date: "07/25/2025",
+        medium: ['watercolor'],
+        subject: ['landscape'],
+        title: 'A Koi Pond'
     }
 ]
 
