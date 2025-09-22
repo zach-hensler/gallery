@@ -38,6 +38,7 @@ import Waterlily from '../assets/photos/2024_09_13-waterlily.jpg';
 import FrogLog from '../assets/photos/2025_01_16-frog-on-log.jpg';
 import Sailboat from '../assets/photos/2025_07_08-sailboat.jpg';
 import KoiPond from '../assets/photos/2025_07_25-koi-pond.jpg';
+import BigFrig from '../assets/photos/2025_09_21-big-frig.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -341,6 +342,13 @@ const photoData: PhotoDataType[] = [
         medium: ['watercolor'],
         subject: ['landscape'],
         title: 'A Koi Pond'
+    },
+    {
+        image: BigFrig,
+        title: "Delicious Snack, or Deadly Poison?",
+        date: "09/21/2025",
+        medium: ['watercolor'],
+        subject: ['animal', 'scene']
     }
 ]
 
