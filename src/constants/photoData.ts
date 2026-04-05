@@ -39,6 +39,7 @@ import FrogLog from '../assets/photos/2025_01_16-frog-on-log.jpg';
 import Sailboat from '../assets/photos/2025_07_08-sailboat.jpg';
 import KoiPond from '../assets/photos/2025_07_25-koi-pond.jpg';
 import BigFrig from '../assets/photos/2025_09_21-big-frig.jpg';
+import DougCats from '../assets/photos/2026_03_21_doug-cats.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -348,6 +349,13 @@ const photoData: PhotoDataType[] = [
         title: "Delicious Snack, or Deadly Poison?",
         date: "09/21/2025",
         medium: ['watercolor'],
+        subject: ['animal', 'scene']
+    },
+    {
+        image: DougCats,
+        title: "Fiends of a Friend",
+        date: "03/21/2026",
+        medium: ['acrylic'],
         subject: ['animal', 'scene']
     }
 ]
