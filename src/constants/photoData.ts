@@ -40,6 +40,7 @@ import Sailboat from '../assets/photos/2025_07_08-sailboat.jpg';
 import KoiPond from '../assets/photos/2025_07_25-koi-pond.jpg';
 import BigFrig from '../assets/photos/2025_09_21-big-frig.jpg';
 import DougCats from '../assets/photos/2026_03_21_doug-cats.jpg';
+import SquirrelRiver from '../assets/photos/2026_08_27-squirrel-river.jpg';
 
 export const Mediums = ['graphite', 'colored-pencil', 'marker', 'acrylic', 'watercolor'] as const
 export type MediumsType = typeof Mediums[number]
@@ -356,6 +357,13 @@ const photoData: PhotoDataType[] = [
         title: "Fiends of a Friend",
         date: "03/21/2026",
         medium: ['acrylic'],
+        subject: ['animal', 'scene']
+    },
+    {
+        image: SquirrelRiver,
+        title: "Enjoying the View",
+        date: "08/27/2026",
+        medium: ['watercolor'],
         subject: ['animal', 'scene']
     }
 ]
